@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -11,7 +15,6 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
 // const cookieParser = require("cookie-parser");
-// require('dotenv').config();
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");

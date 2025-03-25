@@ -1,4 +1,5 @@
 <% layout("layouts/boilerplate") %>
+<div id="cluster-map"></div>
 
 <h1>キャンプ場一覧</h1>
 <div>
@@ -9,7 +10,11 @@
     <div class="card mb-3"">
         <div class="row">
             <div class="col-md-4">
-                <img class="img-fluid" src="<%= campground.image %>" alt="">
+                <% if(campground.images && campground.images.length) { %>
+                <img class="img-fluid" src="<%= campground.images[0].url %>" alt="">
+                <% } else { %>
+                <img class="img-fluid" src="/photo/noimage.png" alt="">
+                <% } %>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -23,5 +28,9 @@
             </div>
         </div>
     </div>
-  <% } %> 
-
+  <% } %>
+<script>
+    const mapToken = "<%= process.env.MAPTILER_CLOUD_KEY %>"
+    const campgrounds = <%- JSON.stringify(campgrounds) %>
+</script>
+<script src="/javascripts/clusterMap.js"></script>

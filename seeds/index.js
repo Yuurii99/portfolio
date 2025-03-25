@@ -23,7 +23,23 @@ const seedDB = async () => {
             author: "67df5210f0088af09e9c08f9",
             title: `${sample(descriptors)}・${sample(places)}`,
             location: `${cities[randomIndex].prefecture}${cities[randomIndex].city}`,
-            image: `https://picsum.photos/400?random=${Math.random()}`,
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/df9lumcek/image/upload/v1742816655/YelpCamp/w5zlyig4inhxgs6t6xah.jpg',
+                  filename: 'YelpCamp/w5zlyig4inhxgs6t6xah',
+                },
+                {
+                  url: 'https://res.cloudinary.com/df9lumcek/image/upload/v1742816656/YelpCamp/wmjpvwypboyueebjoju0.jpg',
+                  filename: 'YelpCamp/wmjpvwypboyueebjoju0'
+                }
+              ],
+            geometry: {
+                type: "Point",
+                coordinates: [
+                    cities[randomIndex].longitude,
+                    cities[randomIndex].latitude
+                ]
+            },
             description:`あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。またそのなかでいっしょになったたくさんのひとたち、ファゼーロとロザーロ、羊飼のミーロや、顔の赤いこどもたち、地主のテーモ、山猫博士のボーガント・デストゥパーゴなど、いまこの暗い巨きな石の建物のなかで考えていると、みんなむかし風のなつかしい青い幻燈のように思われます。では`,
             price
         });
