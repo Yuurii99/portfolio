@@ -21,12 +21,12 @@ const userRoutes = require("./routes/users");
 
 
 // 本番用
-// const dbUser = process.env.DB_USER;
-// const dbPass = process.env.DB_PASS;
-// const dbUrl = `mongodb+srv://${ dbUser }:${ dbPass }@cluster0.v9pvd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+const dbUrl = `mongodb+srv://${ dbUser }:${ dbPass }@cluster0.v9pvd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // 開発用
-const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
+// const dbUrl = "mongodb://127.0.0.1:27017/yelp-camp";
 
 mongoose.connect(dbUrl)
     .then(() => {
