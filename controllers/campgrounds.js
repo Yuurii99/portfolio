@@ -39,7 +39,6 @@ module.exports.createCampground = async (req, res) => {
     campground.images = req.files.map(file => ({ url: file.path, filename: file.filename}));
     campground.author = req.user._id;
     await campground.save();
-    console.log(campground);
     req.flash("success", "新しいキャンプ場を登録しました");
     res.redirect(`/campgrounds/${campground._id}`);
 };
@@ -56,10 +55,16 @@ module.exports.renderEditForm = async (req, res) => {
 };
 
 module.exports.updateCampground = async (req, res) => {
+    const query = req.body.campground.location;
+    const geoData = await maptilerClient.geocoding.forward(query, {
+        limit: 1
+    });
+    
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
     const imgs = req.files.map(file => ({ url: file.path, filename: file.filename}));
     campground.images.push(...imgs);
+    campground.geometry = geoData.features[0].geometry;
     await campground.save();
     if(req.body.deleteImages) {
         for (let filename of req.body.deleteImages) {
