@@ -11,3 +11,8 @@
 body {
     font-family: "Roboto", sans-serif;
 }
+
+#githubIcon {
+    fill: #ffffff;
+    stroke: #ffffff;
+}

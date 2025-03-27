@@ -15,9 +15,8 @@ module.exports.isLoggedIn = (req, res, next) => {
 };
 
 module.exports.storeReturnTo = (req, res, next) => {
-    if (req.session.returnTo) {
-        res.locals.returnTo = req.session.returnTo;
-    }
+    res.locals.returnTo = req.cookies.previousUrl;
+    // res.cookie("previousUrl", "");
     next();
 }
 
@@ -60,3 +59,8 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     }
     next();
 };
+
+module.exports.loggedReqest = (req, res, next) => {
+    console.log(req);
+    next();
+}

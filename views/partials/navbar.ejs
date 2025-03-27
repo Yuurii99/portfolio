@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top bg-primary navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">YelpCamp</a>
+      <a class="navbar-brand" href="/">YelpCamp</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,7 +12,7 @@
         </div>
         <div class="navbar-nav ms-auto">
           <% if(!currentUser) { %>
-            <a class="nav-link" href="/login">ログイン</a>
+            <a id="loginLink" class="nav-link" href="/login">ログイン</a>
             <a class="nav-link" href="/register">ユーザー登録</a>
           <% } else { %>
           <a class="nav-link" href="/logout">ログアウト</a>
@@ -21,3 +21,12 @@
       </div>
     </div>
   </nav>
+<% if(!currentUser) { %>
+<script>
+  const loginLink = document.querySelector("#loginLink");
+  loginLink.addEventListener("click", () => {
+    const previousUrl = document.referrer || window.location.href;
+    document.cookie = `previousUrl=${previousUrl}; path=/;`;
+  });
+</script>
+<% } %>

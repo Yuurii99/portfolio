@@ -11,7 +11,12 @@ imageSchema.virtual("thumbnail").get(function() {
     return this.url.replace("/upload", "/upload/w_200");
 });
 
-const opts = { toJSON: { virtuals: true } };
+const opts = {
+    toJSON: {
+        virtuals: true
+    },
+    timestamps: true
+};
 
 const campgroundSchema = new Schema({
     title: String,
@@ -40,11 +45,11 @@ const campgroundSchema = new Schema({
             ref: "Review"
         }
     ],
+    lastUpdate : {
+        type: Date,
+        default: Date.now
+    },
 }, opts);
-
-// imageSchema.virtual("thumbnail").get(function() {
-//     return this.url.replace("/upload", "/upload/w_200");
-// });
 
 campgroundSchema.virtual("properties.popupMarkup").get(function() {
     return `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>

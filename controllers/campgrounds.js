@@ -30,8 +30,8 @@ module.exports.showCampground = async (req, res) => {
 };
 
 module.exports.createCampground = async (req, res) => {
-    const query = req.body.campground.location;
-    const geoData = await maptilerClient.geocoding.forward(query, {
+    const locationQuery = req.body.campground.location;
+    const geoData = await maptilerClient.geocoding.forward(locationQuery, {
         limit: 1
     });
     const campground = new Campground(req.body.campground);
@@ -55,23 +55,37 @@ module.exports.renderEditForm = async (req, res) => {
 };
 
 module.exports.updateCampground = async (req, res) => {
-    const query = req.body.campground.location;
-    const geoData = await maptilerClient.geocoding.forward(query, {
-        limit: 1
-    });
-    
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
+
+    console.log(campground.lastUpdate.toISOString());
+
+    // 画像関連処理
     const imgs = req.files.map(file => ({ url: file.path, filename: file.filename}));
+    const addImgsLength = imgs.length;
+    const deleteImgsLength = req.body.deleteImages ? req.body.deleteImages.length : 0;
+    const currentImgsLength = campground.images ? campground.images.length : 0;
+    const resultImgsLength = addImgsLength + currentImgsLength - deleteImgsLength;
+
+    if (resultImgsLength > 5) {
+        req.flash("error", "キャンプ場の画像は5枚以下にしてください");
+        return res.redirect(`/campgrounds/${ campground._id }/edit`);
+    }
     campground.images.push(...imgs);
+
+    // 地図関連処理
+    const locationQuery = req.body.campground.location;
+    const geoData = await maptilerClient.geocoding.forward(locationQuery, {
+        limit: 1
+    });
     campground.geometry = geoData.features[0].geometry;
+
     await campground.save();
     if(req.body.deleteImages) {
         for (let filename of req.body.deleteImages) {
             await cloudinary.uploader.destroy(filename);
         }
         await campground.updateOne({ $pull: {images: {filename: {$in: req.body.deleteImages }}}});
-
     }
     req.flash("success", "キャンプ場を更新しました");
     res.redirect(`/campgrounds/${campground._id}`);
