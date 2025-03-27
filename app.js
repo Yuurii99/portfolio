@@ -17,9 +17,11 @@ const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 
+
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
+const cookieParser = require("cookie-parser");
 
 const dbUrl =  process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
@@ -69,6 +71,8 @@ const sessionConfig = {
     }
 };
 
+sessionConfig.cookie.secure = process.env.NODE_ENV !== "production" ? false : true;
+
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -78,6 +82,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(flash());
 app.use(helmet());
+app.use(cookieParser());
 
 const scriptSrcUrls = [
     'https://cdn.jsdelivr.net',

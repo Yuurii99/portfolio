@@ -43,7 +43,7 @@
             登録者：<%= campground.author.username %>
           </li>
           <li class="list-group-item">
-            <%= campground.price %>/泊
+            <%= campground.price %>円 / 1泊
           </li>
         </ul>
         <% if(currentUser && campground.author.equals(currentUser._id)) { %>
@@ -54,13 +54,13 @@
             </form>
           </div>
           <% } %>
-            <div class="card-footer text-body-secondary">2days ago</div>
+            <div class="card-footer text-body-secondary">最終更新日：<%= campground.lastUpdate.toLocaleDateString("ja") %></div>
       </div>
     </div>
     <div class="col-6">
       <div id="map"></div>
+      <h2 class="mt-2">レビュー</h2>
       <% if(currentUser) { %>
-        <h2>レビュー</h2>
         <form action="/campgrounds/<%= campground._id %>/reviews" class="mb-3 needs-validation" method="POST"
           novalidate>
           <div>
@@ -84,7 +84,7 @@
           </div>
           <button class="btn btn-success">投稿する</button>
         </form>
-        <% } %>
+      <% } %>
           <% for (let review of campground.reviews) { %>
             <div class="card mb-3">
               <div class="card-body">
