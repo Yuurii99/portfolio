@@ -1,10 +1,12 @@
-## ポートフォリオについて
-URL: https://portfolio-7hkr.onrender.com   
-以下のUdemy講義を参考に作成した物になります。
+## ポートフォリオについて   
 [Web Developer Bootcamp（日本語版）](https://www.udemy.com/share/105qh83@PJlTbWKr8l9hcYz-8vHFzB_aeiTer128FdsmOjUw_H2tB4C04f3WslywsgkALBEJXA==/ "参考にした講座です")   
-諸事情によりアプリデプロイ先を、 Heroku -> Render 
+上記のUdemy講義を参考に作成した物になります。
+
+諸事情によりデプロイ先を、 Heroku -> Render   
 地図APIを、Mapbox -> MapTilerに変更し作成しました。   
+
 以下にテスト用アカウントがございますので、こちらを使用頂くか、アカウント登録をお願いいたします。   
+ポートフォリオURL: https://portfolio-7hkr.onrender.com   
 ID: testuser / PW: testuser
 
 ## 使用した技術/サービスについて
