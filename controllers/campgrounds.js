@@ -58,7 +58,7 @@ module.exports.updateCampground = async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
 
-    console.log(campground.lastUpdate.toISOString());
+    // console.log(campground.lastUpdate.toISOString());
 
     // 画像関連処理
     const imgs = req.files.map(file => ({ url: file.path, filename: file.filename}));
